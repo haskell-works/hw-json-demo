@@ -61,8 +61,8 @@ instance Show (Mini (String, JsonPartialValue)) where
 instance Show a => Show (Mini [a]) where
   show (Mini xs) = case length xs of
     xsLen | xsLen == 0    -> "[]"
-    xsLen | xsLen <= 10   -> "[" ++ intercalate ", " (show `map` xs) ++ "]"
-    _                     -> "[" ++ intercalate ", " (show `map` take 10 xs) ++ ", ..]"
+    xsLen | xsLen <= 50   -> "[" ++ intercalate ", " (show `map` xs) ++ "]"
+    _                     -> "[" ++ intercalate ", " (show `map` take 50 xs) ++ ", ..]"
 
 newtype QueryJsonCursor = QueryJsonCursor [JsonCursor BS.ByteString (BitShown (DVS.Vector Word64)) (SimpleBalancedParens (DVS.Vector Word64))]
 
@@ -123,7 +123,7 @@ deriving instance MonadPlus   QuerySet
 
 instance Show a => Show (Mini (DL.DList a)) where
   showsPrec _ (Mini dxs) = case DL.toList dxs of
-    xs@(_:_:_:_:_:_:_:_:_:_:_:_:_)  -> (("[" ++ intercalate ", " (show `map` take 10 xs) ++ ", ..]") ++)
+    xs@(_:_:_:_:_:_:_:_:_:_:_:_:_)  -> (("[" ++ intercalate ", " (show `map` take 50 xs) ++ ", ..]") ++)
     []                              -> ("[]" ++)
     xs                              -> (("[" ++ intercalate ", " (show `map` xs) ++ "]") ++)
 
