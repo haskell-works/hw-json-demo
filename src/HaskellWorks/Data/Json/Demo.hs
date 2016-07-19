@@ -96,6 +96,10 @@ expandObject jpv = case jpv of
   JsonPartialObject fs  -> QuerySet $ DL.fromList fs
   _                     -> QuerySet   DL.empty
 
+selectField :: String -> (String, JsonPartialValue) -> QuerySet JsonPartialValue
+selectField fieldName (fieldName', jpv) | fieldName == fieldName' = QuerySet $ DL.singleton jpv
+selectField _         _                                           = QuerySet   DL.empty
+
 jsonKeys :: JsonPartialValue -> [String]
 jsonKeys jpv = case jpv of
   JsonPartialObject fs  -> fst `map` fs
