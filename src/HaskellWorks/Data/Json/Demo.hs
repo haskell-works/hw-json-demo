@@ -44,25 +44,79 @@ instance MiniShow JsonPartialValue where
     JsonPartialError s    -> ("<error " ++). shows s . (">" ++)
 
 instance Show (Mini JsonPartialValue) where
-  showsPrec _ v = case v of
-    Mini (JsonPartialString s ) -> shows s
-    Mini (JsonPartialNumber n ) -> shows n
-    Mini (JsonPartialObject []) -> ("{}" ++)
-    Mini (JsonPartialObject _ ) -> ("{..}" ++)
-    Mini (JsonPartialArray [] ) -> ("[]" ++)
-    Mini (JsonPartialArray _  ) -> ("[..]" ++)
-    Mini (JsonPartialBool w   ) -> shows w
-    Mini  JsonPartialNull       -> ("null" ++)
-    Mini (JsonPartialError s  ) -> ("<error " ++) . shows s . (">" ++)
+  showsPrec _ mjpv = case mjpv of
+    Mini (JsonPartialString s   ) -> shows s
+    Mini (JsonPartialNumber n   ) -> shows n
+    Mini (JsonPartialObject []  ) -> ("{}" ++)
+    Mini (JsonPartialObject kvs ) -> ("{" ++) . showKvs kvs . ("}" ++)
+    Mini (JsonPartialArray []   ) -> ("[]" ++)
+    Mini (JsonPartialArray _    ) -> ("[..]" ++)
+    Mini (JsonPartialBool w     ) -> shows w
+    Mini  JsonPartialNull         -> ("null" ++)
+    Mini (JsonPartialError s    ) -> ("<error " ++) . shows s . (">" ++)
+    where showKvs :: [(String, JsonPartialValue)] -> String -> String
+          showKvs kvs = foldl (.) id ((\kv -> shows (Micro kv) . (", " ++)) `map` kvs)
 
 instance Show (Mini (String, JsonPartialValue)) where
   showsPrec _ (Mini (fieldName, jpv)) = shows fieldName . (": " ++) . shows (Mini jpv)
+
+instance Show a => Show (Micro [a]) where
+  show (Micro xs) = case length xs of
+    xsLen | xsLen == 0    -> "[]"
+    xsLen | xsLen <= 50   -> "[" ++ intercalate ", " (show `map` xs) ++ "]"
+    _                     -> "[" ++ intercalate ", " (show `map` take 50 xs) ++ ", ..]"
+
+instance Show a => Show (Micro (DL.DList a)) where
+  showsPrec _ (Micro dxs) = case DL.toList dxs of
+    xs@(_:_:_:_:_:_:_:_:_:_:_:_:_)  -> (("[" ++ intercalate ", " (show `map` take 50 xs) ++ ", ..]") ++)
+    []                              -> ("[]" ++)
+    xs                              -> (("[" ++ intercalate ", " (show `map` xs) ++ "]") ++)
+
+newtype Micro a = Micro a
+
+class MicroShow a where
+  microShows :: a -> String -> String
+  microShow :: a -> String
+  microShow a = microShows a []
+
+instance MicroShow JsonPartialValue where
+  microShows v = case v of
+    JsonPartialString s   -> shows s
+    JsonPartialNumber n   -> shows n
+    JsonPartialObject []  -> ("{}" ++)
+    JsonPartialObject _   -> ("{..}" ++)
+    JsonPartialArray []   -> ("[]" ++)
+    JsonPartialArray _    -> ("[..]" ++)
+    JsonPartialBool w     -> shows w
+    JsonPartialNull       -> ("null" ++)
+    JsonPartialError s    -> ("<error " ++). shows s . (">" ++)
+
+instance Show (Micro JsonPartialValue) where
+  showsPrec _ v = case v of
+    Micro (JsonPartialString s ) -> shows s
+    Micro (JsonPartialNumber n ) -> shows n
+    Micro (JsonPartialObject []) -> ("{}" ++)
+    Micro (JsonPartialObject _ ) -> ("{..}" ++)
+    Micro (JsonPartialArray [] ) -> ("[]" ++)
+    Micro (JsonPartialArray _  ) -> ("[..]" ++)
+    Micro (JsonPartialBool w   ) -> shows w
+    Micro  JsonPartialNull       -> ("null" ++)
+    Micro (JsonPartialError s  ) -> ("<error " ++) . shows s . (">" ++)
+
+instance Show (Micro (String, JsonPartialValue)) where
+  showsPrec _ (Micro (fieldName, jpv)) = shows fieldName . (": " ++) . shows (Micro jpv)
 
 instance Show a => Show (Mini [a]) where
   show (Mini xs) = case length xs of
     xsLen | xsLen == 0    -> "[]"
     xsLen | xsLen <= 50   -> "[" ++ intercalate ", " (show `map` xs) ++ "]"
     _                     -> "[" ++ intercalate ", " (show `map` take 50 xs) ++ ", ..]"
+
+instance Show a => Show (Mini (DL.DList a)) where
+  showsPrec _ (Mini dxs) = case DL.toList dxs of
+    xs@(_:_:_:_:_:_:_:_:_:_:_:_:_)  -> (("[" ++ intercalate ", " (show `map` take 50 xs) ++ ", ..]") ++)
+    []                              -> ("[]" ++)
+    xs                              -> (("[" ++ intercalate ", " (show `map` xs) ++ "]") ++)
 
 newtype QueryJsonCursor = QueryJsonCursor [JsonCursor BS.ByteString (BitShown (DVS.Vector Word64)) (SimpleBalancedParens (DVS.Vector Word64))]
 
@@ -124,12 +178,6 @@ deriving instance Applicative QuerySet
 deriving instance Monad       QuerySet
 deriving instance Alternative QuerySet
 deriving instance MonadPlus   QuerySet
-
-instance Show a => Show (Mini (DL.DList a)) where
-  showsPrec _ (Mini dxs) = case DL.toList dxs of
-    xs@(_:_:_:_:_:_:_:_:_:_:_:_:_)  -> (("[" ++ intercalate ", " (show `map` take 50 xs) ++ ", ..]") ++)
-    []                              -> ("[]" ++)
-    xs                              -> (("[" ++ intercalate ", " (show `map` xs) ++ "]") ++)
 
 instance Show (QuerySet JsonPartialValue) where
   showsPrec _ (QuerySet das) = shows (Mini (Mini `fmap` das))
