@@ -3,7 +3,7 @@ version:                0.1.0.0
 synopsis:               Conduits for tokenizing streams.
 description:            Please see README.md
 homepage:               http://github.com/haskell-works/hw-json#readme
-license:                BSD3
+license:                MIT
 license-file:           LICENSE
 author:                 John Ky
 maintainer:             newhoggy@gmail.com
@@ -28,7 +28,7 @@ library
                       , hw-json
                       , hw-diagnostics
                       , hw-parser
-                      , hw-prim                       >= 0.0.3.1
+                      , hw-prim                       >= 0.3.0.0
                       , hw-rankselect                 >= 0.0.0.5
                       , mmap
                       , mono-traversable

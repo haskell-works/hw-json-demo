@@ -21,7 +21,6 @@ import           HaskellWorks.Data.Json.Succinct.Cursor
 import           HaskellWorks.Data.Json.Succinct.Index
 import           HaskellWorks.Data.Json.Succinct.PartialIndex
 import           HaskellWorks.Data.Json.Value
-import           HaskellWorks.Data.Succinct.BalancedParens.Simple
 import           HaskellWorks.Diagnostics.Time
 
 newtype Mini a = Mini a
@@ -48,7 +47,10 @@ instance Show (Mini JsonPartialValue) where
     Mini (JsonPartialString s   ) -> shows s
     Mini (JsonPartialNumber n   ) -> shows n
     Mini (JsonPartialObject []  ) -> ("{}" ++)
-    Mini (JsonPartialObject kvs ) -> ("{" ++) . showKvs kvs . ("}" ++)
+    Mini (JsonPartialObject kvs ) -> case kvs of
+      (_:_:_:_:_:_:_:_:_:_:_:_:_) -> ("{" ++) . showKvs kvs . (", ..}" ++)
+      []                          -> ("{}" ++)
+      _                           -> ("{" ++) . showKvs kvs . ("}" ++)
     Mini (JsonPartialArray []   ) -> ("[]" ++)
     Mini (JsonPartialArray _    ) -> ("[..]" ++)
     Mini (JsonPartialBool w     ) -> shows w
