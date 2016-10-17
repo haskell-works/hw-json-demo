@@ -17,15 +17,19 @@ library
   hs-source-dirs:       src
   exposed-modules:      HaskellWorks.Data.Json.Demo
   build-depends:        base                          >= 4          && < 5
+                      , aeson
                       , array
                       , attoparsec
                       , bytestring
                       , conduit
                       , containers
+                      , deepseq
                       , dlist
                       , hw-bits
                       , hw-conduit
                       , hw-json
+                      , hw-json-mquery
+                      , hw-mquery
                       , hw-diagnostics
                       , hw-parser
                       , hw-prim                       >= 0.3.0.0
