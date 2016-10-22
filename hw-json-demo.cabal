@@ -27,13 +27,13 @@ library
                       , dlist
                       , hw-bits
                       , hw-conduit
-                      , hw-json
+                      , hw-json                       >= 0.3.0.0
                       , hw-json-mquery
-                      , hw-mquery
+                      , hw-mquery                     >= 0.1.0.1
                       , hw-diagnostics
                       , hw-parser
-                      , hw-prim                       >= 0.3.0.0
-                      , hw-rankselect                 >= 0.0.0.5
+                      , hw-prim                       >= 0.3.0.5
+                      , hw-rankselect                 >= 0.4.0.0
                       , mmap
                       , mono-traversable
                       , resourcet
