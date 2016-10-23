@@ -1,9 +1,9 @@
 name:                   hw-json-demo
 version:                0.1.0.0
-synopsis:               Conduits for tokenizing streams.
+synopsis:               Demo library
 description:            Please see README.md
 homepage:               http://github.com/haskell-works/hw-json#readme
-license:                MIT
+license:                BSD3
 license-file:           LICENSE
 author:                 John Ky
 maintainer:             newhoggy@gmail.com
