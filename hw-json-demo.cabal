@@ -28,12 +28,12 @@ library
                       , hw-bits
                       , hw-conduit
                       , hw-excess                     >= 0.0.0.1
-                      , hw-json                       >= 0.3.0.0
+                      , hw-json                       >= 0.4.0.0
                       , hw-json-mquery
                       , hw-mquery                     >= 0.1.0.1
                       , hw-diagnostics
                       , hw-parser
-                      , hw-prim                       >= 0.3.0.5
+                      , hw-prim                       >= 0.4.0.0
                       , hw-rankselect                 >= 0.5.0.0
                       , hw-rankselect-base            >= 0.1.0.0
                       , mmap
