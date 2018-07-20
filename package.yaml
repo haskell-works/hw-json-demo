@@ -2,7 +2,7 @@ name: hw-json-demo
 version: '0.1.0.0'
 synopsis: Demo library
 description: Please see README.md
-category: Data, Conduit
+category: Data, Succinct Data Structures, Data Structures, JSON
 author: John Ky
 maintainer: newhoggy@gmail.com
 copyright: 2016 John Ky
