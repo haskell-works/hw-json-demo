@@ -1,30 +1,46 @@
 #!/usr/bin/env bash
 
-STACK_FLAGS="
-  --flag bits-extra:bmi2
-  --flag hw-rankselect-base:bmi2
-  --flag hw-rankselect:bmi2
-"
+CABAL_FLAGS=""
 
-case $1 in
-  build)
-    stack build \
+cmd="$1"
+
+shift
+
+case "$cmd" in
+  install)
+    cabal new-install -j4 \
       --test --no-run-tests --bench --no-run-benchmarks \
-      $STACK_FLAGS
+      $CABAL_FLAGS "$@"
+    ;;
+
+  build)
+    cabal new-build all -j4 \
+      --disable-tests --disable-benchmarks \
+      $CABAL_FLAGS "$@"
     ;;
 
   test)
-    stack test \
-      $STACK_FLAGS
+    cabal new-test -j4 --enable-tests --disable-documentation \
+      $CABAL_FLAGS "$@"
     ;;
 
   bench)
-    stack bench \
-      $STACK_FLAGS
+    cabal new-bench -j4 \
+      $CABAL_FLAGS "$@"
     ;;
 
   repl)
-    stack repl \
-      $STACK_FLAGS
+    cabal new-repl \
+      $CABAL_FLAGS "$@"
+    ;;
+
+  clean)
+    cabal new-clean
+    ;;
+  
+  *)
+    echo "Unrecognised command: $cmd"
+    exit 1
     ;;
 esac
+
