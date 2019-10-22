@@ -3,6 +3,7 @@ cabal-version:       2.2
 name:                 hw-json-demo
 version:              0.1.0.0
 synopsis:             Demo JSON project
+description:          Demo JSON project.
 homepage:             https://github.com/haskellworks/hw-json-demo
 license:              BSD-3-Clause
 license-file:         LICENSE
@@ -13,9 +14,17 @@ category:             Data
 build-type:           Simple
 extra-source-files:   CHANGELOG.md
 
+source-repository head
+  type: git
+  location: https://github.com/haskell-works/hw-json
+
 common base                     { build-depends: base                     >= 4          && < 5      }
 
+common aeson                    { build-depends: aeson                    >= 1.4.3.0    && < 1.5    }
+common bytestring               { build-depends: bytestring               >= 0.10.6     && < 0.11   }
 common hw-json                  { build-depends: hw-json                  >= 1.3.1.1    && < 1.4    }
+common hw-json-standard-cursor  { build-depends: hw-json-standard-cursor  >= 0.2.0.1    && < 0.3    }
+common hw-prim                  { build-depends: hw-prim                  >= 0.6.2.32   && < 0.7    }
 common hspec                    { build-depends: hspec                    >= 2.4        && < 3      }
 
 common config
@@ -23,13 +32,18 @@ common config
 
 library
   import:               base, config
+                      , aeson
+                      , bytestring
                       , hw-json
+                      , hw-json-standard-cursor
+                      , hw-prim
   exposed-modules:
   other-modules:
   other-extensions:
   hs-source-dirs:       src
 
 executable hw-json-demo
+  import:               base, config
   main-is:              Main.hs
   other-modules:
   other-extensions:
@@ -38,10 +52,15 @@ executable hw-json-demo
 
 test-suite hw-json-demo-test
   import:               base, config
+                      , aeson
+                      , bytestring
                       , hspec
+                      , hw-json
+                      , hw-json-standard-cursor
+                      , hw-prim
   type:                 exitcode-stdio-1.0
   main-is:              Spec.hs
-  other-modules:
+  other-modules:        HaskellWorks.Data.Json.Demo.Examples.Example1
   other-extensions:
   build-tool-depends:   hspec-discover:hspec-discover
   hs-source-dirs:       test
