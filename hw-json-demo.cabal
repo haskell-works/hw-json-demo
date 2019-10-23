@@ -22,8 +22,10 @@ common base                     { build-depends: base                     >= 4  
 
 common aeson                    { build-depends: aeson                    >= 1.4.3.0    && < 1.5    }
 common bytestring               { build-depends: bytestring               >= 0.10.6     && < 0.11   }
+common dlist                    { build-depends: dlist                    >= 0.8.0.7    && < 0.9    }
 common hw-json                  { build-depends: hw-json                  >= 1.3.1.1    && < 1.4    }
 common hw-json-standard-cursor  { build-depends: hw-json-standard-cursor  >= 0.2.0.1    && < 0.3    }
+common hw-mquery                { build-depends: hw-mquery                >= 0.2.0.2    && < 0.3    }
 common hw-prim                  { build-depends: hw-prim                  >= 0.6.2.32   && < 0.7    }
 common hspec                    { build-depends: hspec                    >= 2.4        && < 3      }
 
@@ -54,13 +56,18 @@ test-suite hw-json-demo-test
   import:               base, config
                       , aeson
                       , bytestring
+                      , dlist
                       , hspec
                       , hw-json
                       , hw-json-standard-cursor
+                      , hw-mquery
                       , hw-prim
   type:                 exitcode-stdio-1.0
   main-is:              Spec.hs
   other-modules:        HaskellWorks.Data.Json.Demo.Examples.Example1
+                        HaskellWorks.Data.Json.Demo.Examples.Example2
+                        HaskellWorks.Data.Json.Demo.Examples.Example3
+                        HaskellWorks.Data.Json.Demo.Examples.Example4
   other-extensions:
   build-tool-depends:   hspec-discover:hspec-discover
   hs-source-dirs:       test
