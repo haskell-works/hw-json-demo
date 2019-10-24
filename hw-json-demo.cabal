@@ -31,6 +31,7 @@ common hspec                    { build-depends: hspec                    >= 2.4
 
 common config
   default-language:    Haskell2010
+  ghc-options:         -Wall
 
 library
   import:               base, config

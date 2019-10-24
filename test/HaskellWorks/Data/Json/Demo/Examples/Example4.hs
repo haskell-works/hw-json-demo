@@ -7,12 +7,10 @@ import Control.Monad
 import Data.Function
 import Data.List
 import HaskellWorks.Data.Json.PartialValue
-import HaskellWorks.Data.Json.Standard.Cursor.Generic
 import HaskellWorks.Data.Json.Standard.Cursor.Load.Cursor
 import HaskellWorks.Data.Json.Standard.Load.Partial
 import HaskellWorks.Data.MQuery
 import HaskellWorks.Data.MQuery.Micro
-import HaskellWorks.Data.MQuery.Row
 
 import qualified Data.DList as DL
 
