@@ -23,6 +23,8 @@ common base                     { build-depends: base                     >= 4  
 common aeson                    { build-depends: aeson                    >= 1.4.3.0    && < 1.5    }
 common bytestring               { build-depends: bytestring               >= 0.10.6     && < 0.11   }
 common dlist                    { build-depends: dlist                    >= 0.8.0.7    && < 0.9    }
+common doctest                  { build-depends: doctest                  >= 0.16.2     && < 0.17   }
+common doctest-discover         { build-depends: doctest-discover         >= 0.2        && < 0.3    }
 common hw-json                  { build-depends: hw-json                  >= 1.3.1.1    && < 1.4    }
 common hw-json-standard-cursor  { build-depends: hw-json-standard-cursor  >= 0.2.0.1    && < 0.3    }
 common hw-mquery                { build-depends: hw-mquery                >= 0.2.0.2    && < 0.3    }
@@ -30,8 +32,11 @@ common hw-prim                  { build-depends: hw-prim                  >= 0.6
 common hspec                    { build-depends: hspec                    >= 2.4        && < 3      }
 
 common config
-  default-language:    Haskell2010
-  ghc-options:         -Wall
+  default-language:     Haskell2010
+  ghc-options:          -Wall
+
+common hw-json-demo
+  build-depends:        hw-json-demo
 
 library
   import:               base, config
@@ -72,3 +77,14 @@ test-suite hw-json-demo-test
   other-extensions:
   build-tool-depends:   hspec-discover:hspec-discover
   hs-source-dirs:       test
+
+test-suite doctest
+  import:               base, config
+                      , doctest
+                      , doctest-discover
+                      , hw-json-demo
+  type:                 exitcode-stdio-1.0
+  ghc-options:          -threaded
+  main-is:              DoctestDriver.hs
+  HS-Source-Dirs:       doctest
+  build-tool-depends:   doctest-discover:doctest-discover
