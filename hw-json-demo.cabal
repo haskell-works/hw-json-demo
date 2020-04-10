@@ -1,18 +1,19 @@
-cabal-version:       2.2
+cabal-version: 2.2
 
-name:                 hw-json-demo
-version:              0.1.0.0
-synopsis:             Demo JSON project
-description:          Demo JSON project.
-homepage:             https://github.com/haskellworks/hw-json-demo
-license:              BSD-3-Clause
-license-file:         LICENSE
-author:               John Ky
-maintainer:           newhoggy@gmail.com
-copyright:            John Ky 2019
-category:             Data
-build-type:           Simple
-extra-source-files:   CHANGELOG.md
+name:                   hw-json-demo
+version:                0.1.0.0
+synopsis:               Demo JSON project
+description:            Demo JSON project.
+homepage:               https://github.com/haskellworks/hw-json-demo
+license:                BSD-3-Clause
+license-file:           LICENSE
+author:                 John Ky
+maintainer:             newhoggy@gmail.com
+copyright:              John Ky 2019
+category:               Data
+tested-with:            GHC == 8.10.1, GHC == 8.8.3, GHC == 8.6.5, GHC == 8.4.4
+build-type:             Simple
+extra-source-files:     CHANGELOG.md
 
 source-repository head
   type: git
