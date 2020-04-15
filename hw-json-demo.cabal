@@ -70,6 +70,7 @@ test-suite hw-json-demo-test
                       , hw-mquery
                       , hw-prim
   type:                 exitcode-stdio-1.0
+  ghc-options:          -threaded -rtsopts -with-rtsopts=-N
   main-is:              Spec.hs
   other-modules:        HaskellWorks.Data.Json.Demo.Examples.Example1
                         HaskellWorks.Data.Json.Demo.Examples.Example2
@@ -85,7 +86,7 @@ test-suite doctest
                       , doctest-discover
                       , hw-json-demo
   type:                 exitcode-stdio-1.0
-  ghc-options:          -threaded
+  ghc-options:          -threaded -rtsopts -with-rtsopts=-N
   main-is:              DoctestDriver.hs
   HS-Source-Dirs:       doctest
   build-tool-depends:   doctest-discover:doctest-discover
